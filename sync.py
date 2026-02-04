@@ -4,7 +4,7 @@ import base64
 # API Keys and Identifiers (replace with your actual values)
 CLICKUP_API_KEY = 'your_clickup_api_key'
 CLICKUP_LIST_ID = 'your_clickup_list_id'
-CLICKUP_ENDPOINT = 'https://api.clickup.com/api/v2/task/'
+CLICKUP_ENDPOINT = 'https://api.clickup.com/api/v2/'
 
 AZURE_ORGANIZATION = 'your_azure_organization'
 AZURE_PROJECT = 'your_azure_project'
@@ -37,7 +37,7 @@ def create_azure_task(task_title, task_description):
 
 def update_clickup_task_status(task_id):
     """Update the status of a task in ClickUp"""
-    url = f'{CLICKUP_ENDPOINT}{task_id}'
+    url = f'{CLICKUP_ENDPOINT}task/{task_id}'
     payload = {'status': 'COMPLETED'}
     response = requests.put(url, json=payload, headers=clickup_headers)
     if not response.ok:
@@ -75,7 +75,7 @@ def synchronize_azure_tasks():
 
 def get_custom_field_ids(task_id):
     """Retrieve custom field IDs from a ClickUp task"""
-    url = f'{CLICKUP_ENDPOINT}{task_id}'
+    url = f'{CLICKUP_ENDPOINT}task/{task_id}'
     response = requests.get(url, headers=clickup_headers)
     if response.ok:
         task_data = response.json()
@@ -91,7 +91,7 @@ def get_custom_field_ids(task_id):
 
 def update_clickup_custom_field(task_id, custom_field_id, value):
     """Update a custom field in a ClickUp task"""
-    url = f'{CLICKUP_ENDPOINT}{task_id}/field/{custom_field_id}'
+    url = f'{CLICKUP_ENDPOINT}task/{task_id}/field/{custom_field_id}'
     payload = {'value': str(value)}
     response = requests.post(url, json=payload, headers=clickup_headers)
     print(f"Response Status Code: {response.status_code}")
